@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="pt-BR" x-data="{ menuOpen: false, activeSegment: 'bercario' }" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Colégio Portinari Boituva — A única escola-chácara de Boituva. Berçário, Educação Infantil e Ensino Fundamental I em 8.000m² de natureza.">
+    <meta property="og:title" content="Colégio Portinari | Escola-Chácara em Boituva">
+    <meta property="og:description" content="Ambiente de aprendizado imersivo com 8.000m² de natureza. Berçário, Educação Infantil e Ensino Fundamental I.">
+    <title>Colégio Portinari | Escola-Chácara em Boituva</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        green: { DEFAULT: '#1B7A3D', light: '#27AE60', pale: '#E8F5E9' },
+                        cream: '#FFF9F0',
+                        sand: '#F5EDE3',
+                        brown: { DEFAULT: '#3E2723', soft: '#5D4037' },
+                        warm: { DEFAULT: '#FF8F00', pale: '#FFF3E0' },
+                        sky: { DEFAULT: '#2196F3', pale: '#E3F2FD' },
+                    },
+                    fontFamily: {
+                        brand: ['"Fraunces"', 'serif'],
+                        body: ['"DM Sans"', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+
+<body class="overflow-x-hidden">
+
+    <!-- ================================================================
+         NAVBAR
+         ================================================================ -->
+    <nav id="navbar" class="nav-glass fixed top-0 left-0 w-full z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 md:h-[72px]">
+
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-2.5 group">
+                    <div class="w-10 h-10 rounded-xl bg-green/10 flex items-center justify-center transition-all duration-300 group-hover:bg-green/20 group-hover:rotate-3">
+                        <svg class="w-6 h-6 text-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="font-brand text-xl font-bold text-brown leading-none tracking-tight">Portinari</span>
+                        <span class="block text-[0.6rem] text-brown-soft/50 tracking-[0.15em] uppercase font-medium">Boituva</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Nav -->
+                <div class="hidden md:flex items-center gap-1">
+                    <a href="#sobre" class="px-3 py-2 text-brown-soft/70 hover:text-green font-medium text-sm rounded-lg hover:bg-green/5 transition-all duration-200">Sobre</a>
+                    <a href="#segmentos" class="px-3 py-2 text-brown-soft/70 hover:text-green font-medium text-sm rounded-lg hover:bg-green/5 transition-all duration-200">Segmentos</a>
+                    <a href="#diferenciais" class="px-3 py-2 text-brown-soft/70 hover:text-green font-medium text-sm rounded-lg hover:bg-green/5 transition-all duration-200">Diferenciais</a>
+                    <a href="#atividades" class="px-3 py-2 text-brown-soft/70 hover:text-green font-medium text-sm rounded-lg hover:bg-green/5 transition-all duration-200">Atividades</a>
+                    <a href="#unidades" class="px-3 py-2 text-brown-soft/70 hover:text-green font-medium text-sm rounded-lg hover:bg-green/5 transition-all duration-200">Unidades</a>
+                    <a href="#contato" class="px-3 py-2 text-brown-soft/70 hover:text-green font-medium text-sm rounded-lg hover:bg-green/5 transition-all duration-200">Contato</a>
+                    <a href="https://wa.me/5515997878556?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Col%C3%A9gio%20Portinari." target="_blank"
+                        class="ml-3 px-5 py-2.5 bg-green text-white rounded-full font-semibold text-sm transition-all duration-300 hover:bg-green-light hover:shadow-lg hover:shadow-green/20 hover:-translate-y-0.5">
+                        Agende uma Visita
+                    </a>
+                </div>
+
+                <!-- Hamburger -->
+                <button @click="menuOpen = !menuOpen" class="md:hidden relative w-10 h-10 rounded-xl flex flex-col items-center justify-center gap-1.5 hover:bg-green/5 transition-colors" aria-label="Menu">
+                    <span class="block w-5 h-0.5 bg-brown transition-all duration-300 origin-center" :class="menuOpen ? 'rotate-45 translate-y-[4px]' : ''"></span>
+                    <span class="block w-5 h-0.5 bg-brown transition-all duration-300" :class="menuOpen ? 'opacity-0 scale-0' : ''"></span>
+                    <span class="block w-5 h-0.5 bg-brown transition-all duration-300 origin-center" :class="menuOpen ? '-rotate-45 -translate-y-[4px]' : ''"></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div x-show="menuOpen" x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0 -translate-y-2" x-cloak
+            class="md:hidden bg-white/95 backdrop-blur-xl border-t border-black/5">
+            <div class="px-6 py-5 flex flex-col gap-1">
+                <a @click="menuOpen=false" href="#sobre" class="px-4 py-3 text-brown hover:text-green hover:bg-green/5 rounded-xl text-base font-medium transition-all">Sobre</a>
+                <a @click="menuOpen=false" href="#segmentos" class="px-4 py-3 text-brown hover:text-green hover:bg-green/5 rounded-xl text-base font-medium transition-all">Segmentos</a>
+                <a @click="menuOpen=false" href="#diferenciais" class="px-4 py-3 text-brown hover:text-green hover:bg-green/5 rounded-xl text-base font-medium transition-all">Diferenciais</a>
+                <a @click="menuOpen=false" href="#atividades" class="px-4 py-3 text-brown hover:text-green hover:bg-green/5 rounded-xl text-base font-medium transition-all">Atividades</a>
+                <a @click="menuOpen=false" href="#unidades" class="px-4 py-3 text-brown hover:text-green hover:bg-green/5 rounded-xl text-base font-medium transition-all">Unidades</a>
+                <a @click="menuOpen=false" href="#contato" class="px-4 py-3 text-brown hover:text-green hover:bg-green/5 rounded-xl text-base font-medium transition-all">Contato</a>
+                <a @click="menuOpen=false" href="https://wa.me/5515997878556" target="_blank"
+                    class="mt-2 text-center px-5 py-3 bg-green text-white rounded-full font-semibold transition-all hover:bg-green-light">
+                    Agende uma Visita
+                </a>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- ================================================================
+         HERO — Split layout com organic blobs
+         ================================================================ -->
+    <section id="hero" class="relative min-h-screen flex items-center overflow-hidden pt-20">
+
+        <!-- Organic blobs background -->
+        <div class="hero-blob absolute -top-32 -right-32 w-[500px] h-[500px] bg-green-pale/80"></div>
+        <div class="hero-blob absolute -bottom-40 -left-20 w-[400px] h-[400px] bg-warm-pale/60" style="animation-delay:-5s;animation-duration:18s;"></div>
+        <div class="hero-blob absolute top-1/3 right-1/4 w-[300px] h-[300px] bg-sky-pale/50" style="animation-delay:-10s;animation-duration:20s;"></div>
+
+        <!-- Dot pattern -->
+        <div class="absolute inset-0 opacity-[0.35] pointer-events-none" style="background-image:radial-gradient(circle,#1B7A3D 0.8px,transparent 0.8px);background-size:40px 40px;"></div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center min-h-[80vh]">
+
+                <!-- Left: Text -->
+                <div class="order-2 lg:order-1 pb-12 lg:pb-0">
+                    <div class="hero-text-reveal inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-pale border border-green/10 mb-8">
+                        <span class="w-2 h-2 rounded-full bg-green animate-pulse"></span>
+                        <span class="text-green font-semibold text-sm tracking-wide">Escola-Chácara em Boituva</span>
+                    </div>
+
+                    <h1 class="hero-text-reveal-delay font-brand font-bold text-brown leading-[1.1] tracking-tight mb-6" style="font-size:clamp(2.5rem,6vw,4.5rem);">
+                        Onde aprender<br>
+                        <span class="text-green">é uma aventura</span>
+                    </h1>
+
+                    <p class="hero-text-reveal-delay2 text-brown-soft/70 text-lg sm:text-xl leading-relaxed max-w-lg mb-10">
+                        A única escola-chácara de Boituva, com 8.000m² dedicados ao desenvolvimento integral dos alunos em contato direto com a natureza.
+                    </p>
+
+                    <div class="hero-text-reveal-delay3 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                        <a href="https://wa.me/5515997878556?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20uma%20visita%20ao%20Col%C3%A9gio%20Portinari." target="_blank"
+                            class="inline-flex items-center gap-2.5 px-7 py-3.5 bg-green text-white rounded-full font-bold text-base transition-all duration-300 hover:bg-green-light hover:shadow-xl hover:shadow-green/20 hover:-translate-y-1">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                            Agende uma Visita
+                        </a>
+                        <a href="#segmentos" class="inline-flex items-center gap-2 px-7 py-3.5 border-2 border-brown/15 text-brown rounded-full font-bold text-base transition-all duration-300 hover:border-green hover:text-green hover:-translate-y-1">
+                            Conheça os Segmentos
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right: Stats grid (replaces image) -->
+                <div class="order-1 lg:order-2 grid grid-cols-2 gap-4 hero-text-reveal-delay2">
+                    <div class="stat-pill" style="--i:0">
+                        <span class="text-4xl mb-1">🌳</span>
+                        <span class="font-brand font-bold text-green text-3xl leading-none">8.000</span>
+                        <span class="text-brown-soft/50 text-sm font-medium mt-1 text-center">m² de natureza</span>
+                    </div>
+                    <div class="stat-pill" style="--i:1">
+                        <span class="text-4xl mb-1">📚</span>
+                        <span class="font-brand font-bold text-green text-3xl leading-none">3</span>
+                        <span class="text-brown-soft/50 text-sm font-medium mt-1 text-center">Segmentos de ensino</span>
+                    </div>
+                    <div class="stat-pill" style="--i:2">
+                        <span class="text-4xl mb-1">🎨</span>
+                        <span class="font-brand font-bold text-green text-3xl leading-none">15+</span>
+                        <span class="text-brown-soft/50 text-sm font-medium mt-1 text-center">Atividades extras</span>
+                    </div>
+                    <div class="stat-pill" style="--i:3">
+                        <span class="text-4xl mb-1">🏫</span>
+                        <span class="font-brand font-bold text-green text-3xl leading-none">2</span>
+                        <span class="text-brown-soft/50 text-sm font-medium mt-1 text-center">Unidades em Boituva</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ================================================================
+         WAVE DIVIDER
+         ================================================================ -->
+    <div class="wave-divider">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+            <path fill="#F5EDE3" d="M0,32L48,37.3C96,43,192,53,288,53.3C384,53,480,43,576,37.3C672,32,768,32,864,37.3C960,43,1056,53,1152,53.3C1248,53,1344,43,1392,37.3L1440,32L1440,60L0,60Z"/>
+        </svg>
+    </div>
+
+
+    <!-- ================================================================
+         SOBRE — Assimétrico com reveal lateral
+         ================================================================ -->
+    <section id="sobre" class="relative py-20 md:py-28 bg-sand overflow-hidden">
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16 items-center">
+
+                <!-- Left col: 3/5 -->
+                <div class="lg:col-span-3 reveal-left">
+                    <span class="inline-block text-green font-semibold text-sm tracking-[0.2em] uppercase mb-4">Quem Somos</span>
+                    <h2 class="font-brand font-bold text-brown leading-[1.1] tracking-tight mb-6" style="font-size:clamp(2rem,4.5vw,3rem);">
+                        A única escola-chácara<br><span class="text-green">de Boituva</span>
+                    </h2>
+                    <p class="text-brown-soft/70 text-lg leading-relaxed mb-8 max-w-2xl">
+                        O Colégio Portinari oferece um ambiente de aprendizado imersivo onde as crianças desenvolvem todo o seu potencial em contato direto com a natureza. Com uma proposta pedagógica inovadora, nosso foco é o desenvolvimento integral &mdash; acadêmico, emocional e social &mdash; dos alunos.
+                    </p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="glass-card p-5 text-center">
+                            <div class="w-12 h-12 rounded-xl bg-green-pale flex items-center justify-center mx-auto mb-3">
+                                <svg class="w-6 h-6 text-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                            </div>
+                            <h4 class="font-bold text-brown text-sm mb-1">Pedagógica Inovadora</h4>
+                            <p class="text-brown-soft/50 text-xs leading-relaxed">Métodos modernos com excelência acadêmica</p>
+                        </div>
+                        <div class="glass-card p-5 text-center">
+                            <div class="w-12 h-12 rounded-xl bg-green-pale flex items-center justify-center mx-auto mb-3">
+                                <svg class="w-6 h-6 text-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+                            </div>
+                            <h4 class="font-bold text-brown text-sm mb-1">Integração Natural</h4>
+                            <p class="text-brown-soft/50 text-xs leading-relaxed">Pomar, animais e áreas verdes</p>
+                        </div>
+                        <div class="glass-card p-5 text-center">
+                            <div class="w-12 h-12 rounded-xl bg-green-pale flex items-center justify-center mx-auto mb-3">
+                                <svg class="w-6 h-6 text-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg>
+                            </div>
+                            <h4 class="font-bold text-brown text-sm mb-1">Equipe Capacitada</h4>
+                            <p class="text-brown-soft/50 text-xs leading-relaxed">Professores em constante atualização</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right col: 2/5 — Large decorative quote -->
+                <div class="lg:col-span-2 reveal-right">
+                    <div class="relative bg-green rounded-3xl p-8 md:p-10 text-white overflow-hidden">
+                        <!-- Background pattern -->
+                        <div class="absolute inset-0 opacity-10" style="background-image:radial-gradient(circle,white 1px,transparent 1px);background-size:20px 20px;"></div>
+                        <div class="relative z-10">
+                            <svg class="w-10 h-10 text-white/30 mb-4" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                            <p class="text-white/90 text-lg md:text-xl leading-relaxed font-brand italic mb-6">
+                                Aqui, cada criança é vista como única. Nosso espaço permite que elas aprendam brincando, explorando e se conectando com o mundo ao redor.
+                            </p>
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/></svg>
+                                </div>
+                                <div>
+                                    <span class="block text-white font-bold text-sm">Equipe Portinari</span>
+                                    <span class="block text-white/50 text-xs">Compromisso com a educação</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Wave divider back to cream -->
+    <div class="wave-divider flip" style="margin-top:-1px;">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+            <path fill="#F5EDE3" d="M0,32L80,26.7C160,21,320,11,480,10.7C640,11,800,21,960,26.7C1120,32,1280,32,1360,32L1440,32L1440,60L0,60Z"/>
+        </svg>
+    </div>
+
+
+    <!-- ================================================================
+         SEGMENTOS — Tab switcher com Alpine
+         ================================================================ -->
+    <section id="segmentos" class="relative py-20 md:py-28 overflow-hidden">
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <div class="text-center max-w-2xl mx-auto mb-12 reveal">
+                <span class="inline-block text-green font-semibold text-sm tracking-[0.2em] uppercase mb-4">Segmentos</span>
+                <h2 class="font-brand font-bold text-brown leading-[1.1] tracking-tight mb-4" style="font-size:clamp(2rem,4.5vw,3rem);">
+                    Educação completa para<br><span class="text-green">cada fase da infância</span>
+                </h2>
+                <p class="text-brown-soft/60 text-lg leading-relaxed">
+                    Do berçário ao 5&ordm; ano, cada etapa respeita o ritmo de desenvolvimento de cada criança.
+                </p>
+            </div>
+
+            <!-- Tab Buttons -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12 reveal">
+                <button @click="activeSegment='bercario'" class="segment-tab" :class="activeSegment==='bercario' && 'active'">
+                    <span class="mr-1">👶</span> Berçário
+                </button>
+                <button @click="activeSegment='infantil'" class="segment-tab" :class="activeSegment==='infantil' && 'active'">
+                    <span class="mr-1">🎨</span> Educação Infantil
+                </button>
+                <button @click="activeSegment='fundamental'" class="segment-tab" :class="activeSegment==='fundamental' && 'active'">
+                    <span class="mr-1">🎓</span> Ensino Fundamental I
+                </button>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="max-w-4xl mx-auto">
+
+                <!-- Berçário -->
+                <div x-show="activeSegment==='bercario'" x-transition:enter="transition ease-out duration-400"
+                    x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
+                    <div class="glass-card p-8 md:p-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-warm-pale text-warm font-semibold text-xs tracking-wider uppercase mb-4">4 meses a 2 anos</div>
+                            <h3 class="font-brand font-bold text-brown text-2xl md:text-3xl mb-4">Berçário</h3>
+                            <p class="text-brown-soft/60 leading-relaxed mb-6">
+                                Ambiente seguro e acolhedor com cuidados especializados. Estimulação sensorial, musicalização e os primeiros passos do desenvolvimento afetivo e motor em nosso Espaço Bebê.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1.5 bg-warm-pale text-warm text-xs rounded-full font-semibold">Espaço Bebê</span>
+                                <span class="px-3 py-1.5 bg-warm-pale text-warm text-xs rounded-full font-semibold">Estimulação Sensorial</span>
+                                <span class="px-3 py-1.5 bg-warm-pale text-warm text-xs rounded-full font-semibold">Musicalização</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-center">
+                            <div class="w-48 h-48 rounded-3xl bg-gradient-to-br from-warm-pale to-warm/10 flex items-center justify-center text-8xl">
+                                👶
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Educação Infantil -->
+                <div x-show="activeSegment==='infantil'" x-transition:enter="transition ease-out duration-400"
+                    x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
+                    <div class="glass-card p-8 md:p-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-pale text-green font-semibold text-xs tracking-wider uppercase mb-4">3 a 5 anos</div>
+                            <h3 class="font-brand font-bold text-brown text-2xl md:text-3xl mb-4">Educação Infantil</h3>
+                            <p class="text-brown-soft/60 leading-relaxed mb-6">
+                                Aprendizado lúdico e significativo. Contação de histórias, atelier de artes, culinária e atividades ao ar livre que estimulam criatividade e autonomia em nossa escola-chácara.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1.5 bg-green-pale text-green text-xs rounded-full font-semibold">Atelier de Artes</span>
+                                <span class="px-3 py-1.5 bg-green-pale text-green text-xs rounded-full font-semibold">Culinária</span>
+                                <span class="px-3 py-1.5 bg-green-pale text-green text-xs rounded-full font-semibold">Contação de Histórias</span>
+                                <span class="px-3 py-1.5 bg-green-pale text-green text-xs rounded-full font-semibold">Montessori</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-center">
+                            <div class="w-48 h-48 rounded-3xl bg-gradient-to-br from-green-pale to-green/10 flex items-center justify-center text-8xl">
+                                🎨
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fundamental -->
+                <div x-show="activeSegment==='fundamental'" x-transition:enter="transition ease-out duration-400"
+                    x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
+                    <div class="glass-card p-8 md:p-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-sky-pale text-sky font-semibold text-xs tracking-wider uppercase mb-4">1&ordm; ao 5&ordm; ano</div>
+                            <h3 class="font-brand font-bold text-brown text-2xl md:text-3xl mb-4">Ensino Fundamental I</h3>
+                            <p class="text-brown-soft/60 leading-relaxed mb-6">
+                                Excelência acadêmica com robótica, projetos interdisciplinares e formação de valores. Preparando alunos para os desafios do futuro com base sólida e pensamento crítico.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1.5 bg-sky-pale text-sky text-xs rounded-full font-semibold">Robótica</span>
+                                <span class="px-3 py-1.5 bg-sky-pale text-sky text-xs rounded-full font-semibold">Projetos Interdisciplinares</span>
+                                <span class="px-3 py-1.5 bg-sky-pale text-sky text-xs rounded-full font-semibold">Leitura</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-center">
+                            <div class="w-48 h-48 rounded-3xl bg-gradient-to-br from-sky-pale to-sky/10 flex items-center justify-center text-8xl">
+                                🎓
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ================================================================
+         DIFERENCIAIS — Timeline vertical alternado
+         ================================================================ -->
+    <div class="wave-divider">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+            <path fill="#F5EDE3" d="M0,20L120,26.7C240,33,480,47,720,47C960,47,1200,33,1320,26.7L1440,20L1440,60L0,60Z"/>
+        </svg>
+    </div>
+
+    <section id="diferenciais" class="relative py-20 md:py-28 bg-sand overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+                <span class="inline-block text-green font-semibold text-sm tracking-[0.2em] uppercase mb-4">Nossos Diferenciais</span>
+                <h2 class="font-brand font-bold text-brown leading-[1.1] tracking-tight mb-4" style="font-size:clamp(2rem,4.5vw,3rem);">
+                    Por que escolher o<br><span class="text-green">Colégio Portinari?</span>
+                </h2>
+                <p class="text-brown-soft/60 text-lg leading-relaxed">
+                    Natureza, inovação e acolhimento para o melhor desenvolvimento do seu filho.
+                </p>
+            </div>
+
+            <!-- Diferencial grid — card based -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 stagger-children">
+
+                <div class="glass-card p-7 text-center reveal" style="--i:0">
+                    <div class="w-16 h-16 rounded-2xl bg-green-pale flex items-center justify-center mx-auto mb-5 transition-transform duration-300 hover:rotate-6 hover:scale-110">
+                        <svg class="w-8 h-8 text-green" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5a17.92 17.92 0 01-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418"/></svg>
+                    </div>
+                    <h3 class="font-brand font-bold text-brown text-lg mb-2">Escola-Chácara</h3>
+                    <p class="text-brown-soft/50 text-sm leading-relaxed">8.000m² de natureza com pomar, animais e áreas verdes integradas ao aprendizado.</p>
+                </div>
+
+                <div class="glass-card p-7 text-center reveal" style="--i:1">
+                    <div class="w-16 h-16 rounded-2xl bg-warm-pale flex items-center justify-center mx-auto mb-5 transition-transform duration-300 hover:rotate-6 hover:scale-110">
+                        <svg class="w-8 h-8 text-warm" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/></svg>
+                    </div>
+                    <h3 class="font-brand font-bold text-brown text-lg mb-2">Metodologia Inovadora</h3>
+                    <p class="text-brown-soft/50 text-sm leading-relaxed">Abordagem pedagógica moderna com elementos Montessori e aprendizado ativo.</p>
+                </div>
+
+                <div class="glass-card p-7 text-center reveal" style="--i:2">
+                    <div class="w-16 h-16 rounded-2xl bg-sky-pale flex items-center justify-center mx-auto mb-5 transition-transform duration-300 hover:rotate-6 hover:scale-110">
+                        <svg class="w-8 h-8 text-sky" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg>
+                    </div>
+                    <h3 class="font-brand font-bold text-brown text-lg mb-2">Equipe Qualificada</h3>
+                    <p class="text-brown-soft/50 text-sm leading-relaxed">Professores em constante capacitação profissional e pedagógica.</p>
+                </div>
+
+                <div class="glass-card p-7 text-center reveal" style="--i:3">
+                    <div class="w-16 h-16 rounded-2xl bg-pink-50 flex items-center justify-center mx-auto mb-5 transition-transform duration-300 hover:rotate-6 hover:scale-110">
+                        <svg class="w-8 h-8 text-pink-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/></svg>
+                    </div>
+                    <h3 class="font-brand font-bold text-brown text-lg mb-2">Ambiente Acolhedor</h3>
+                    <p class="text-brown-soft/50 text-sm leading-relaxed">Cuidado individualizado e atenção ao desenvolvimento emocional.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <div class="wave-divider flip" style="margin-top:-1px;">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+            <path fill="#F5EDE3" d="M0,20L120,26.7C240,33,480,47,720,47C960,47,1200,33,1320,26.7L1440,20L1440,60L0,60Z"/>
+        </svg>
+    </div>
+
+
+    <!-- ================================================================
+         ATIVIDADES — Marquee infinito
+         ================================================================ -->
+    <section id="atividades" class="relative py-20 md:py-28 overflow-hidden">
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+            <div class="text-center max-w-2xl mx-auto reveal">
+                <span class="inline-block text-green font-semibold text-sm tracking-[0.2em] uppercase mb-4">Atividades & Projetos</span>
+                <h2 class="font-brand font-bold text-brown leading-[1.1] tracking-tight mb-4" style="font-size:clamp(2rem,4.5vw,3rem);">
+                    Aprendizado que vai<br><span class="text-green">além da sala de aula</span>
+                </h2>
+                <p class="text-brown-soft/60 text-lg leading-relaxed">
+                    Atividades que estimulam corpo, mente e criatividade em contato com a natureza. Passe o mouse para pausar.
+                </p>
+            </div>
+        </div>
+
+        <!-- Marquee row 1 -->
+        <div class="overflow-hidden mb-4">
+            <div class="marquee-track">
+                <div class="marquee-item"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17l-5.657-5.657a8 8 0 1111.314 0l-5.657 5.657z"/></svg> Robótica</div>
+                <div class="marquee-item"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/></svg> Contação de Histórias</div>
+                <div class="marquee-item"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.764m3.42 3.42a6.776 6.776 0 00-3.42-3.42"/></svg> Atelier de Artes</div>
+                <div class="marquee-item"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.34A1.154 1.154 0 0016.27 1.2l-4.02 1.148A1.154 1.154 0 0011.1 3.5V14"/></svg> Musicalização</div>
+                <div class="marquee-item"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8.25v-1.5m0 1.5c-1.355 0-2.697.056-4.024.166C6.845 8.51 6 9.473 6 10.608v2.513m6-4.87c1.355 0 2.697.055 4.024.165C17.155 8.51 18 9.473 18 10.608v2.513M9 4.5v-1.5m6 1.5v-1.5m-9 9l1.5.75a3.354 3.354 0 003 0 3.354 3.354 0 013 0 3.354 3.354 0 003 0l1.5-.75"/></svg> Culinária</div>
+                <div class="marquee-item"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/></svg> Vivência e Exploração</div>
+                <div class="marquee-item"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z"/></svg> Sustentabilidade</div>
+                <!-- Duplicate for seamless loop -->
+                <div class="marquee-item"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17l-5.657-5.657a8 8 0 1111.314 0l-5.657 5.657z"/></svg> Robótica</div>
+                <div class="marquee-item"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/></svg> Contação de Histórias</div>
+                <div class="marquee-item"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.764m3.42 3.42a6.776 6.776 0 00-3.42-3.42"/></svg> Atelier de Artes</div>
+                <div class="marquee-item"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.34A1.154 1.154 0 0016.27 1.2l-4.02 1.148A1.154 1.154 0 0011.1 3.5V14"/></svg> Musicalização</div>
+                <div class="marquee-item"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8.25v-1.5m0 1.5c-1.355 0-2.697.056-4.024.166C6.845 8.51 6 9.473 6 10.608v2.513m6-4.87c1.355 0 2.697.055 4.024.165C17.155 8.51 18 9.473 18 10.608v2.513M9 4.5v-1.5m6 1.5v-1.5m-9 9l1.5.75a3.354 3.354 0 003 0 3.354 3.354 0 013 0 3.354 3.354 0 003 0l1.5-.75"/></svg> Culinária</div>
+                <div class="marquee-item"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/></svg> Vivência e Exploração</div>
+                <div class="marquee-item"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z"/></svg> Sustentabilidade</div>
+            </div>
+        </div>
+
+        <!-- Marquee row 2 (reverse) -->
+        <div class="overflow-hidden">
+            <div class="marquee-track" style="animation-direction:reverse;animation-duration:35s;">
+                <div class="marquee-item"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.115 5.19l.319 1.913A6 6 0 008.11 10.36L9.75 12l-.387.775c-.217.433-.132.956.21 1.298l1.348 1.348c.21.21.329.497.329.795v1.089c0 .426.24.815.622 1.006l.153.076c.433.217.956.132 1.298-.21l.723-.723a8.7 8.7 0 002.288-4.042"/></svg> Contato com Animais</div>
+                <div class="marquee-item"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/></svg> Pomar</div>
+                <div class="marquee-item"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg> Educação Física</div>
+                <div class="marquee-item"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58"/></svg> Parque</div>
+                <div class="marquee-item"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25v14.25"/></svg> Leitura</div>
+                <div class="marquee-item"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg> Capoeira</div>
+                <!-- Duplicate -->
+                <div class="marquee-item"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.115 5.19l.319 1.913A6 6 0 008.11 10.36L9.75 12l-.387.775c-.217.433-.132.956.21 1.298l1.348 1.348c.21.21.329.497.329.795v1.089c0 .426.24.815.622 1.006l.153.076c.433.217.956.132 1.298-.21l.723-.723a8.7 8.7 0 002.288-4.042"/></svg> Contato com Animais</div>
+                <div class="marquee-item"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/></svg> Pomar</div>
+                <div class="marquee-item"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg> Educação Física</div>
+                <div class="marquee-item"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58"/></svg> Parque</div>
+                <div class="marquee-item"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25v14.25"/></svg> Leitura</div>
+                <div class="marquee-item"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg> Capoeira</div>
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- ================================================================
+         UNIDADES
+         ================================================================ -->
+    <div class="wave-divider">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+            <path fill="#F5EDE3" d="M0,32L48,37.3C96,43,192,53,288,53.3C384,53,480,43,576,37.3C672,32,768,32,864,37.3C960,43,1056,53,1152,53.3C1248,53,1344,43,1392,37.3L1440,32L1440,60L0,60Z"/>
+        </svg>
+    </div>
+
+    <section id="unidades" class="relative py-20 md:py-28 bg-sand overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <div class="text-center max-w-2xl mx-auto mb-12 reveal">
+                <span class="inline-block text-green font-semibold text-sm tracking-[0.2em] uppercase mb-4">Nossas Unidades</span>
+                <h2 class="font-brand font-bold text-brown leading-[1.1] tracking-tight mb-4" style="font-size:clamp(2rem,4.5vw,3rem);">
+                    Duas unidades em<br><span class="text-green">Boituva, SP</span>
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+
+                <div class="unit-card reveal-left">
+                    <div class="unit-card-accent"></div>
+                    <div class="p-8">
+                        <div class="w-12 h-12 rounded-xl bg-green-pale flex items-center justify-center mb-5">
+                            <svg class="w-6 h-6 text-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+                        </div>
+                        <h3 class="font-brand font-bold text-brown text-xl mb-1">Colégio Portinari</h3>
+                        <span class="inline-block text-green text-xs font-semibold tracking-wider uppercase mb-4">Unidade Principal</span>
+                        <p class="text-brown-soft/60 text-sm leading-relaxed mb-3">
+                            Rua Bruna Venturini Vercelino, 131<br>
+                            Jardim Primavera &mdash; Boituva, SP<br>
+                            <span class="text-brown-soft/40">(Atrás do Supermercado Paulistão)</span>
+                        </p>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-green-pale text-green text-xs font-semibold rounded-full">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347"/></svg>
+                            Ed. Infantil & Fundamental I
+                        </span>
+                    </div>
+                </div>
+
+                <div class="unit-card reveal-right">
+                    <div class="unit-card-accent" style="background:linear-gradient(90deg,#FF8F00,#FFB74D);"></div>
+                    <div class="p-8">
+                        <div class="w-12 h-12 rounded-xl bg-warm-pale flex items-center justify-center mb-5">
+                            <svg class="w-6 h-6 text-warm" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+                        </div>
+                        <h3 class="font-brand font-bold text-brown text-xl mb-1">Espaço Bebê</h3>
+                        <span class="inline-block text-warm text-xs font-semibold tracking-wider uppercase mb-4">Unidade Berçário</span>
+                        <p class="text-brown-soft/60 text-sm leading-relaxed mb-3">
+                            Rua Nove de Julho, 299<br>
+                            Centro &mdash; Boituva, SP
+                        </p>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-warm-pale text-warm text-xs font-semibold rounded-full">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.182 15.182a4.5 4.5 0 01-6.364 0M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75"/></svg>
+                            Berçário (4 meses a 2 anos)
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <div class="wave-divider flip" style="margin-top:-1px;">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+            <path fill="#F5EDE3" d="M0,32L48,37.3C96,43,192,53,288,53.3C384,53,480,43,576,37.3C672,32,768,32,864,37.3C960,43,1056,53,1152,53.3C1248,53,1344,43,1392,37.3L1440,32L1440,60L0,60Z"/>
+        </svg>
+    </div>
+
+
+    <!-- ================================================================
+         CONTATO
+         ================================================================ -->
+    <section id="contato" class="relative py-20 md:py-28 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <div class="text-center max-w-2xl mx-auto mb-12 reveal">
+                <span class="inline-block text-green font-semibold text-sm tracking-[0.2em] uppercase mb-4">Contato</span>
+                <h2 class="font-brand font-bold text-brown leading-[1.1] tracking-tight mb-4" style="font-size:clamp(2rem,4.5vw,3rem);">
+                    Venha conhecer o<br><span class="text-green">Colégio Portinari</span>
+                </h2>
+                <p class="text-brown-soft/60 text-lg leading-relaxed">
+                    Agende uma visita e descubra o ambiente ideal para o desenvolvimento do seu filho.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16 max-w-5xl mx-auto">
+
+                <!-- Left: Contact info -->
+                <div class="lg:col-span-2 flex flex-col gap-5 reveal-left">
+
+                    <a href="tel:+551533634057" class="group flex items-center gap-4 p-4 rounded-xl hover:bg-green-pale/50 transition-all duration-300">
+                        <div class="w-12 h-12 rounded-xl bg-green-pale flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                            <svg class="w-5 h-5 text-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/></svg>
+                        </div>
+                        <div>
+                            <span class="block text-brown-soft/40 text-xs tracking-widest uppercase font-semibold">Telefone</span>
+                            <span class="block text-brown font-bold text-base group-hover:text-green transition-colors">(15) 3363-4057</span>
+                        </div>
+                    </a>
+
+                    <a href="https://wa.me/5515997878556" target="_blank" class="group flex items-center gap-4 p-4 rounded-xl hover:bg-green-pale/50 transition-all duration-300">
+                        <div class="w-12 h-12 rounded-xl bg-[#25D366]/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                            <svg class="w-5 h-5 text-[#25D366]" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        </div>
+                        <div>
+                            <span class="block text-brown-soft/40 text-xs tracking-widest uppercase font-semibold">WhatsApp</span>
+                            <span class="block text-brown font-bold text-base group-hover:text-[#25D366] transition-colors">(15) 99787-8556</span>
+                        </div>
+                    </a>
+
+                    <a href="mailto:atendimento@portinariboituva.com.br" class="group flex items-center gap-4 p-4 rounded-xl hover:bg-green-pale/50 transition-all duration-300">
+                        <div class="w-12 h-12 rounded-xl bg-green-pale flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                            <svg class="w-5 h-5 text-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+                        </div>
+                        <div>
+                            <span class="block text-brown-soft/40 text-xs tracking-widest uppercase font-semibold">E-mail</span>
+                            <span class="block text-brown font-bold text-sm group-hover:text-green transition-colors">atendimento@portinariboituva.com.br</span>
+                        </div>
+                    </a>
+
+                    <a href="https://www.instagram.com/colegioportinariboituva/" target="_blank" class="group flex items-center gap-4 p-4 rounded-xl hover:bg-pink-50/50 transition-all duration-300">
+                        <div class="w-12 h-12 rounded-xl bg-pink-50 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                            <svg class="w-5 h-5 text-pink-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5"/></svg>
+                        </div>
+                        <div>
+                            <span class="block text-brown-soft/40 text-xs tracking-widest uppercase font-semibold">Instagram</span>
+                            <span class="block text-brown font-bold text-sm group-hover:text-pink-500 transition-colors">@colegioportinariboituva</span>
+                        </div>
+                    </a>
+
+                </div>
+
+                <!-- Right: Form -->
+                <div class="lg:col-span-3 reveal-right">
+                    <div class="glass-card p-8">
+                        <form id="contact-form" class="space-y-4" novalidate>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-brown-soft/50 text-xs tracking-widest uppercase mb-2 font-semibold">Nome do Responsável</label>
+                                    <input name="nome" type="text" placeholder="Seu nome completo" class="form-field">
+                                </div>
+                                <div>
+                                    <label class="block text-brown-soft/50 text-xs tracking-widest uppercase mb-2 font-semibold">Telefone / WhatsApp</label>
+                                    <input name="telefone" type="tel" placeholder="(00) 00000-0000" class="form-field">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-brown-soft/50 text-xs tracking-widest uppercase mb-2 font-semibold">E-mail</label>
+                                <input name="email" type="email" placeholder="seu@email.com" class="form-field">
+                            </div>
+                            <div>
+                                <label class="block text-brown-soft/50 text-xs tracking-widest uppercase mb-2 font-semibold">Segmento de Interesse</label>
+                                <select name="segmento" class="form-field form-select">
+                                    <option value="" disabled selected>Selecione um segmento</option>
+                                    <option value="bercario">Berçário (4 meses a 2 anos)</option>
+                                    <option value="infantil">Educação Infantil (3 a 5 anos)</option>
+                                    <option value="fundamental">Ensino Fundamental I (1&ordm; ao 5&ordm; ano)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-brown-soft/50 text-xs tracking-widest uppercase mb-2 font-semibold">Mensagem</label>
+                                <textarea name="mensagem" rows="3" placeholder="Conte um pouco sobre o que procura..." class="form-field resize-none"></textarea>
+                            </div>
+                            <button type="submit" class="w-full px-8 py-3.5 bg-green text-white font-bold text-base rounded-xl transition-all duration-300 hover:bg-green-light hover:shadow-lg hover:shadow-green/20 hover:-translate-y-0.5">
+                                Enviar Mensagem
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ================================================================
+         FOOTER
+         ================================================================ -->
+    <footer class="bg-brown text-white/80 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+
+                <!-- Brand -->
+                <div>
+                    <a href="#" class="inline-flex items-center gap-2.5 mb-4">
+                        <div class="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-green-light" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                            </svg>
+                        </div>
+                        <span class="font-brand text-xl font-bold text-white">Portinari</span>
+                    </a>
+                    <p class="text-white/40 text-sm leading-relaxed max-w-xs">
+                        A única escola-chácara de Boituva. Educação com natureza, inovação e acolhimento.
+                    </p>
+                </div>
+
+                <!-- Nav -->
+                <div>
+                    <h4 class="font-brand font-bold text-white text-base mb-4">Navegação</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#sobre" class="text-white/40 hover:text-green-light transition-colors text-sm font-medium">Sobre</a></li>
+                        <li><a href="#segmentos" class="text-white/40 hover:text-green-light transition-colors text-sm font-medium">Segmentos</a></li>
+                        <li><a href="#diferenciais" class="text-white/40 hover:text-green-light transition-colors text-sm font-medium">Diferenciais</a></li>
+                        <li><a href="#atividades" class="text-white/40 hover:text-green-light transition-colors text-sm font-medium">Atividades</a></li>
+                        <li><a href="#unidades" class="text-white/40 hover:text-green-light transition-colors text-sm font-medium">Unidades</a></li>
+                        <li><a href="#contato" class="text-white/40 hover:text-green-light transition-colors text-sm font-medium">Contato</a></li>
+                    </ul>
+                </div>
+
+                <!-- Social & Contact -->
+                <div>
+                    <h4 class="font-brand font-bold text-white text-base mb-4">Redes Sociais</h4>
+                    <div class="flex gap-3 mb-5">
+                        <a href="https://www.instagram.com/colegioportinariboituva/" target="_blank"
+                            class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-white/50 hover:text-pink-400 hover:bg-pink-400/10 transition-all duration-300">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5"/></svg>
+                        </a>
+                        <a href="https://www.facebook.com/ColegioPortinariBoituva" target="_blank"
+                            class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-white/50 hover:text-blue-400 hover:bg-blue-400/10 transition-all duration-300">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        </a>
+                    </div>
+                    <p class="text-white/40 text-sm leading-relaxed">
+                        <span class="text-white/60 font-medium">Tel:</span> (15) 3363-4057<br>
+                        <span class="text-white/60 font-medium">WhatsApp:</span> (15) 99787-8556
+                    </p>
+                </div>
+            </div>
+
+            <div class="border-t border-white/10 pt-8 flex flex-col items-center gap-3">
+                <div class="w-full flex flex-col sm:flex-row items-center justify-between gap-3">
+                    <p class="text-white/30 text-sm">
+                        &copy; <script>document.write(new Date().getFullYear())</script> Colégio Portinari Boituva. Todos os direitos reservados.
+                    </p>
+                    <a href="#" class="text-white/30 hover:text-green-light text-sm transition-colors">Voltar ao topo &uarr;</a>
+                </div>
+                <p class="text-white/25 text-xs">Desenvolvido por Bruno Alves Bergamin</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- ================================================================
+         WHATSAPP FLOAT
+         ================================================================ -->
+    <a href="https://wa.me/5515997878556?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Col%C3%A9gio%20Portinari." target="_blank" class="whatsapp-float" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+
+
+    <!-- ================================================================
+         SCRIPTS
+         ================================================================ -->
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        /* ── Navbar scroll effect ─────────────────────────── */
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 40);
+        });
+
+        /* ── Scroll reveal (IntersectionObserver) ─────────── */
+        const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+        revealEls.forEach(el => observer.observe(el));
+
+        /* ── Smooth scroll for anchor links ───────────────── */
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 80;
+                    const y = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                    window.scrollTo({ top: y, behavior: 'smooth' });
+                }
+            });
+        });
+
+    });
+    </script>
+
+</body>
+</html>
